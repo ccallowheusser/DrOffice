@@ -1,0 +1,39 @@
+<h1>Doctor: <%= @doctor.lastNameD %>, <%= @doctor.firstNameD %> </h1>
+
+<% unless @doctor.specialty.empty? %>
+    <p>
+      <strong>Specialty:</strong>
+      <%= @doctor.specialty %>
+    </p>
+    <hr />
+<% end %>
+
+<% if @doctor.patients.any? %>
+    <h5> Patients </h5>
+    <div class="row">
+
+      <% @doctor.appointments.each do |appointment| %>
+
+        <ul class="collection">
+        <li class="collection-item avatar">
+        <span class="title"><%= appointment.patient.lastNameP %>, <%= appointment.patient.firstNameP %></span>
+        <p>Reason for Visit: <%= appointment.description %>
+        </p>
+        <p>Appointment: <%= appointment.date.strftime("%a %b %d %Y") %> 
+              <%= appointment.time.strftime("%I:%M %p") %>
+        </p>
+        <%= link_to 'Remove Appointment', appointment_path(appointment), method: :delete, data: {confirm: 'Really remove this appointment?'} %>
+        </li>
+        </ul>
+
+        <% end %>
+    </div>
+
+ <% else %>
+  <h5>No Appointments Found</h5>
+<% end %>
+
+<%= link_to 'List Doctors', doctors_path %> |
+<%= link_to 'List Patients', patients_path %> |
+<%= link_to 'Edit', edit_doctor_path(@doctor) %>
+

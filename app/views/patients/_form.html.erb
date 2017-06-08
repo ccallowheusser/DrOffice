@@ -1,0 +1,54 @@
+<%= form_for patient do |f| %>
+  <% if patient.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(patient.errors.count, "error") %> prohibited this patient from being saved:</h2>
+
+      <ul>
+      <% patient.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label "Last Name" %>
+    <%= f.text_field :lastNameP %>
+  </div>
+
+  <div class="field">
+    <%= f.label "First Name" %>
+    <%= f.text_field :firstNameP %>
+  </div>
+
+  <div class="field">
+    <%= f.label :birthdate %>
+    <%= f.date_field :birthdate %>
+  </div>
+
+  <div class="field">
+    <%= f.label :gender %>
+    <%= f.select :gender, ['Male', 'Female', 'Other'] %>
+  </div>
+
+<h3>Patient Address:</h3>
+  <%= f.fields_for :address do |a| %>
+    <%= a.label :street %> 
+    <%= a.text_field :street %>
+
+    <%= a.label :city %> 
+    <%= a.text_field :city %>
+
+    <%= a.label :state %> 
+    <%= a.text_field :state %>
+
+    <%= a.label :zip %> 
+    <%= a.text_field :zip %>
+
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+  <%= link_to 'Back to Patients', patients_path %>
+<% end %>

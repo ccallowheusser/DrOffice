@@ -1,0 +1,36 @@
+<h1>New Appointment</h1>
+
+<% if (Doctor.any? && Patient.any?) %>
+
+	<%= form_for @appointment do |f| %>
+
+		<% if @appointment.errors.any? %>
+			<div id="error_explanation">
+			  <h2><%= pluralize(@appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
+
+			  <ul>
+			  <% @appointment.errors.full_messages.each do |message| %>
+			   <li><%= message %></li>
+			  <% end %>
+			  </ul>
+			</div>
+		<% end %>
+
+	  <%= f.select :doctor_id, options_for_select(@doctors) %>
+	  <%= f.select :patient_id, options_for_select(@patients) %>
+	  <%= f.text_field :description, required: true, placeholder: 'Description' %>
+	  <%= f.date_field :date, required: true, placeholder: 'Date' %>
+	  <%= f.time_field :time, required: true, placeholder: 'Time' %>
+
+	  <%= f.submit nil, class: 'btn' %>
+
+  <% end %>
+<% else %>
+
+  <%= flash.now[:error] = "You must have a doctor and a patient before adding an appointment." %>
+
+<% end %>
+
+<hr />
+<%= link_to 'List Doctors', doctors_path %> |
+<%= link_to 'List Patients', patients_path %>
